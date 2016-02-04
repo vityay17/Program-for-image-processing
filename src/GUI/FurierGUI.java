@@ -1,27 +1,31 @@
+package GUI;
 
 import javax.swing.JDialog;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+
 import Algorytms.FurierImpl;
+import Main.Main;
+
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.event.ActionEvent;
 
-public class FurierImplementationGUI extends JDialog {
+public class FurierGUI extends JDialog {
 	private Main main;
 	private FurierImpl furierImpl;
 	private static final long serialVersionUID = 1L;
 
-	private static FurierImplementationGUI instance = null;
-	public static FurierImplementationGUI getInstance(Main main){
+	private static FurierGUI instance = null;
+	public static FurierGUI getInstance(Main main){
 		if(instance == null)
-			instance = new FurierImplementationGUI(main);
+			instance = new FurierGUI(main);
 		return instance;
 	}
 
-	private FurierImplementationGUI(Main main) {
+	private FurierGUI(Main main) {
 		this.main = main;
 		furierImpl = new FurierImpl(main.getImg());
 		

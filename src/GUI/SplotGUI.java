@@ -1,3 +1,4 @@
+package GUI;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -15,39 +16,41 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
 
-public class SplotFrame extends JDialog{
+import Main.Main;
+
+public class SplotGUI extends JDialog{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static SplotFrame instance = null;
+	private static SplotGUI instance = null;
 	private Main main;
 	
 	private JTextField textFieldSizeOfMask;
 	private JButton btnSplotRun;
 	private JTextField textFieldSetToAll;
 	private JButton btnSetToAll;
-	private Histogram_01 histogram;
+//	private Histogram_01 histogram;
 	private JTextField[][] textFieldGrid;
 	private JScrollPane scrollPane;
 	private JTextField textFieldFiGauss;
 	private JTextField textFieldAGauss;
 	private JTextField textFieldAUnsharp;
 	
-	FurierImplementationGUI FurierImplementationGUIInstance;
+	FurierGUI FurierImplementationGUIInstance;
 	 
 	public void drawHistogram(BufferedImage image){
 //		histogram.setImage(image);
 	}
-	public static SplotFrame getInstance(Main main){
+	public static SplotGUI getInstance(Main main){
 		if(instance == null)
-			instance = new SplotFrame(main);
+			instance = new SplotGUI(main);
 		return instance;
 	}
 	
 
 	
-	private SplotFrame(Main main) {
+	private SplotGUI(Main main) {
 		this.main = main;
 		setBounds(100, 100, 996, 847);
 		
@@ -266,7 +269,7 @@ public class SplotFrame extends JDialog{
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					FurierImplementationGUIInstance = FurierImplementationGUI.getInstance(main);
+					FurierImplementationGUIInstance = FurierGUI.getInstance(main);
 					FurierImplementationGUIInstance.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					FurierImplementationGUIInstance.setVisible(true);
 //					main.setSplotFrame(FurierImplementationGUIInstance);

@@ -1,3 +1,4 @@
+package Algorytms;
 
 import java.awt.Color;
 import java.awt.Paint;

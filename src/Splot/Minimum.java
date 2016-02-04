@@ -1,5 +1,8 @@
+package Splot;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+
+import Algorytms.BasicImageOperations;
 
 public class Minimum {
 	protected BufferedImage img;

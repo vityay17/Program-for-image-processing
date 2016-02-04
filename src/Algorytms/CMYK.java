@@ -1,24 +1,21 @@
-
+package Algorytms;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import Main.Main;
 
 public class CMYK {
 	private BufferedImage img;
-	private JLabel imageLabel;
 	private Main main;
 	private int currentCMYK_C = 0;
 	private int currentCMYK_M = 0;
 	private int currentCMYK_Y = 0;
 	private int currentCMYK_K = 0;
 	
-	public CMYK(JLabel lbl, BufferedImage imgTemp, Main main){
-		img = (BufferedImage)imgTemp;
-		imageLabel = lbl;
+	public CMYK(Main main){
 		this.main = main;
+		img = main.getImg();
 	}
 
 	public void setCurrentCMYK_C(int currentCMYK_C) {
@@ -96,9 +93,7 @@ public class CMYK {
 	            imgTemp.setRGB(x, y, new Color(r,g,b).getRGB());
 	        }
 	    }
-	    imageLabel.setIcon(new ImageIcon(imgTemp));
-//	    main.getHistogram().calculateHistogram(imgTemp);
-//	    main.getSplotFrame().drawHistogram(imgTemp);
+	    main.getImageLabel().setIcon(new ImageIcon(imgTemp));
 	}
 	
 	private int clamp(int v, int min, int max){

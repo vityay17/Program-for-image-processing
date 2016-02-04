@@ -1,3 +1,4 @@
+package Algorytms;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
@@ -5,10 +6,11 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import Main.Main;
+
 public class HSL {
-	private BufferedImage img;
-	private JLabel imageLabel;
-	
+	private BufferedImage img;	
+	private Main main;
 	private int currentHSL_H = 0;
 	private int currentHSL_L = 0;
 	private int currentHSL_S = 0;
@@ -17,10 +19,9 @@ public class HSL {
     double S[][];
     double L[][];
     
-	public HSL(JLabel lbl, BufferedImage imgTemp){
-		img = (BufferedImage)imgTemp;
-		imageLabel = lbl;
-		//HSLcache();
+	public HSL(Main main){
+		this.main = main;
+		img = main.getImg();
 	}
 	
 	public void setCurrentHSL_H(int currentHSL_H) {
@@ -122,11 +123,9 @@ public class HSL {
 	        	imgTemp.setRGB(x, y, new Color((int)red,(int)green,(int)blue).getRGB());
 	        }
 	    }
-	    imageLabel.setIcon(new ImageIcon(imgTemp));
-	    
+	    main.getImageLabel().setIcon(new ImageIcon(imgTemp));    
 	}
-	
-	 	
+		 	
 	public void W2engineToHSL(int tempH, int tempS, int tempL){
 		BufferedImage imgTemp = new BufferedImage(img.getWidth(), img.getHeight(),BufferedImage.TYPE_INT_RGB );
 	    int nHeight = imgTemp.getHeight();
@@ -163,7 +162,7 @@ public class HSL {
 	        
 	    }
 	    
-	    imageLabel.setIcon(new ImageIcon(imgTemp));
+	    main.getImageLabel().setIcon(new ImageIcon(imgTemp));
 	}
 	
 	public void WengineToHSL(BufferedImage img, int tempH, int tempS, int tempL){
@@ -254,7 +253,7 @@ public class HSL {
 	            imgTemp.setRGB(x, y, new Color((int)r,(int)g,(int)b).getRGB());
     	    }
         }
-    	    imageLabel.setIcon(new ImageIcon(imgTemp));
+	    main.getImageLabel().setIcon(new ImageIcon(imgTemp));
 	}
 	
 	private double clamp(double d, double e, double f){

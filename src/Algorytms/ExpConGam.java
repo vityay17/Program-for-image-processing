@@ -1,23 +1,21 @@
+package Algorytms;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import Main.Main;
 
 public class ExpConGam {
 	private BufferedImage img;
-	Main main;
+	private Main main;
 	
 	private int currentBrightnes = 0;
 	private int currentContrast = 0;
 	private int currentGamma = 0;
-	JLabel imageLabel;
 	
-	public ExpConGam(JLabel lbl, BufferedImage imgTemp, Main main){
-		img = (BufferedImage)imgTemp;
-		imageLabel = lbl;
+	public ExpConGam(Main main){
 		this.main = main;
+		img = main.getImg();
 	}
 	
 	public void exposure(int db){
@@ -90,7 +88,7 @@ public class ExpConGam {
 	            imgTemp.setRGB(x, y, new Color(r,g,b).getRGB());
 	        }
 	    }
-        imageLabel.setIcon(new ImageIcon(imgTemp));
+        main.getImageLabel().setIcon(new ImageIcon(imgTemp));
 //	    main.getHistogram().calculateHistogram(imgTemp);
 //	    img = imgTemp;
 //        main.getSplotFrame().drawHistogram(imgTemp);
