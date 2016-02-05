@@ -19,18 +19,13 @@ import javax.swing.SwingConstants;
 import Main.Main;
 
 public class SplotGUI extends JDialog{
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private static SplotGUI instance = null;
 	private Main main;
-	
 	private JTextField textFieldSizeOfMask;
 	private JButton btnSplotRun;
 	private JTextField textFieldSetToAll;
 	private JButton btnSetToAll;
-//	private Histogram_01 histogram;
 	private JTextField[][] textFieldGrid;
 	private JScrollPane scrollPane;
 	private JTextField textFieldFiGauss;
@@ -39,9 +34,6 @@ public class SplotGUI extends JDialog{
 	
 	FurierGUI FurierImplementationGUIInstance;
 	 
-	public void drawHistogram(BufferedImage image){
-//		histogram.setImage(image);
-	}
 	public static SplotGUI getInstance(Main main){
 		if(instance == null)
 			instance = new SplotGUI(main);
@@ -53,10 +45,7 @@ public class SplotGUI extends JDialog{
 	private SplotGUI(Main main) {
 		this.main = main;
 		setBounds(100, 100, 996, 847);
-		
-		histogram = new Histogram_01();
-//		drawHistogram(main.getImg());
-		
+	
 		JProgressBar progressBar = new JProgressBar();
 		progressBar.setBounds(10, 768, 960, 30);
 		

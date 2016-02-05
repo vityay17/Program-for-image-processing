@@ -42,38 +42,38 @@ public class ExpConGam {
 //   		 }
 //	    
 	    
-	    for(int y = 0;y < nHeight; y++){
-	        for(int x = 0;x < nWidth; ++x){
-	        	Color color = new Color(img.getRGB(x, y));
-	            int r = color.getRed();
-	            int g = color.getGreen();
-	            int b = color.getBlue();
-	            
-	            r = clamp(r+brightness, 0, 255);
-	            g = clamp(g+brightness, 0, 255);
-	            b = clamp(b+brightness, 0, 255);
-	            
-	            imgTemp.setRGB(x, y, new Color(r,g,b).getRGB());
-	        }
-	    }
-//	    contrast
-	    contrast = -contrast;
-	    for(int y = 0;y < nHeight; y++){
-	        for(int x = 0;x < nWidth; ++x){
-	        	Color color = new Color(img.getRGB(x, y));
-	        	int r = color.getRed();
-	            int g = color.getGreen();
-	            int b = color.getBlue();
-	            
-	            r = clamp((r*(100-contrast)+128*contrast)/100, 0, 255);
-	            g = clamp((g*(100-contrast)+128*contrast)/100, 0, 255);
-	            b = clamp((b*(100-contrast)+128*contrast)/100, 0, 255);
-	            
-	            imgTemp.setRGB(x, y, new Color(r,g,b).getRGB());
-	        }
-	    }
+//	    for(int y = 0;y < nHeight; y++){
+//	        for(int x = 0;x < nWidth; ++x){
+//	        	Color color = new Color(img.getRGB(x, y));
+//	            int r = color.getRed();
+//	            int g = color.getGreen();
+//	            int b = color.getBlue();
+//	            
+//	            r = clamp(r+brightness, 0, 255);
+//	            g = clamp(g+brightness, 0, 255);
+//	            b = clamp(b+brightness, 0, 255);
+//	            
+//	            imgTemp.setRGB(x, y, new Color(r,g,b).getRGB());
+//	        }
+//	    }
+////	    contrast
+//	    contrast = -contrast;
+//	    for(int y = 0;y < nHeight; y++){
+//	        for(int x = 0;x < nWidth; ++x){
+//	        	Color color = new Color(img.getRGB(x, y));
+//	        	int r = color.getRed();
+//	            int g = color.getGreen();
+//	            int b = color.getBlue();
+//	            
+//	            r = clamp((r*(100-contrast)+128*contrast)/100, 0, 255);
+//	            g = clamp((g*(100-contrast)+128*contrast)/100, 0, 255);
+//	            b = clamp((b*(100-contrast)+128*contrast)/100, 0, 255);
+//	            
+//	            imgTemp.setRGB(x, y, new Color(r,g,b).getRGB());
+//	        }
+//	    }
 //	    gamma
-	    double k = (double)gamma/10;
+	    double k = (double)gamma/10.0;
 	    for(int y = 0;y < nHeight; y++){
 	        for(int x = 0;x < nWidth; ++x){
 	        	Color color = new Color(img.getRGB(x, y));
@@ -81,9 +81,9 @@ public class ExpConGam {
 	            int g = color.getGreen();
 	            int b = color.getBlue();
 	            
-	            r = clamp((int) (255*Math.pow(r/255, k)), 0, 255);
-	            g = clamp((int) (255*Math.pow(g/255, k)), 0, 255);
-	            b = clamp((int) (255*Math.pow(b/255, k)), 0, 255);
+	            r = clamp((int) (255*Math.pow(r/255.0, k)), 0, 255);
+	            g = clamp((int) (255*Math.pow(g/255.0, k)), 0, 255);
+	            b = clamp((int) (255*Math.pow(b/255.0, k)), 0, 255);
 	            
 	            imgTemp.setRGB(x, y, new Color(r,g,b).getRGB());
 	        }

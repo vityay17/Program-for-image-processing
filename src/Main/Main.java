@@ -1,4 +1,5 @@
 package Main;
+import java.awt.EventQueue;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,8 +15,11 @@ import Algorytms.CMYK;
 import Algorytms.ExpConGam;
 import Algorytms.HSL;
 import Algorytms.Histogram;
+import Algorytms.SredniaWariacja;
 import GUI.MainGUI;
 import GUI.SplotGUI;
+import LabGUI.Lab;
+import LabGUI.LabGUI;
 import Splot.Maximum;
 import Splot.Medianowy;
 import Splot.Minimum;
@@ -26,19 +30,22 @@ public class Main {
 	private ExpConGam ecg = null;
 	private CMYK cmyk;
 	private HSL hsl;
-//	private Histogram histogram;
+	private SredniaWariacja sredniaWariacja;
 	private Histogram histogram;
-//	private JPanel panelHistogram;
 	private Splot splot;
 	private Minimum minimum;
 	private Maximum maximum;
 	private Medianowy medianowy;
 	private SplotGUI splotframe;
 	private MainGUI mainGui;
+	private Lab lab;
 	
 	public Main () {
-		openImage();
+
 	}
+	
+	public MainGUI getMainGui() { return mainGui; }
+
 	public void setMainGUI(MainGUI mainGui){
 		this.mainGui = mainGui;
 	}
@@ -49,7 +56,7 @@ public class Main {
 	public BufferedImage getImg() {
 		return img;
 	}
-	public ExpConGam getEcg() {
+	public ExpConGam getExpConGam() {
 		return ecg;
 	}
 	public CMYK getCmyk() {
@@ -62,7 +69,11 @@ public class Main {
 	public Histogram getHistogram() {
 		return histogram;
 	}
-
+	
+	public  SredniaWariacja getSredniaWariacja() {
+		return sredniaWariacja;
+	}
+	
 	public JPanel getPanelHistogram() {
 		return mainGui.getPanelForHistogram();
 	}
@@ -103,21 +114,7 @@ public class Main {
 	public void drawHistogram(BufferedImage image){
 //		histogram.setImage(image);
 	}
-		
-	public void changeExposure(int k){ ecg.exposure(k);}
-	public void changeContrast(int k){ecg.contrast(k); }
-	public void changeGamma(int k){ecg.gamma(k);}
-	
-	public void changeCMYK_C(int k){cmyk.setCurrentCMYK_C(k);}
-	public void changeCMYK_Y(int k){cmyk.setCurrentCMYK_Y(k);}
-	public void changeCMYK_M(int k){cmyk.setCurrentCMYK_M(k);}
-	public void changeCMYK_K(int k){cmyk.setCurrentCMYK_K(k);}
-	
-	public void changeHSL_H(int k){hsl.setCurrentHSL_H(k);}
-	public void changeHSL_S(int k){hsl.setCurrentHSL_S(k);}
-	public void changeHSL_L(int k){hsl.setCurrentHSL_L(k);}
-	
-	
+
 	public void setSplotFrame(SplotGUI splotframe){
 		this.splotframe = splotframe;
 	}
@@ -129,12 +126,31 @@ public class Main {
 		ecg = new ExpConGam(this);
 		cmyk =new CMYK(this);
 		hsl = new HSL(this);
-//		histogram = new Histogram();
-//		histogram.setJPanel(panelHistogram);
+		histogram = new Histogram(this);
+		sredniaWariacja = new SredniaWariacja(this);
 		splot = new Splot(img);
 		minimum = new Minimum(img);
 		maximum = new Maximum(img);
 		medianowy = new Medianowy(img);
+	}
+	
+	public void resetAll() {
+		// TODO Auto-generated method stub		
+	}
+
+	public void startLab() {
+		lab = new Lab();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					LabGUI frame = new LabGUI(lab);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
 	}
 	
 

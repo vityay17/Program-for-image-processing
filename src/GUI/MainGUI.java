@@ -23,6 +23,16 @@ public class MainGUI {
 	private SplotGUI splotGui;
 	private JLabel lbl_forImage;
 	private JPanel panelForHistogram;
+	
+	JLabel labelSredniaWartoscIntensywnosciRed;	
+	JLabel labelSredniaWartoscIntensywnosciGreen;	
+	JLabel labelSredniaWartoscIntensywnosciBlue;	
+	JLabel labelSredniaWartoscIntensywnosciGray;
+	
+	JLabel labelWariacijIntensywnosciRed;	
+	JLabel labelWariacijIntensywnosciGreen;
+	JLabel labelWariacijIntensywnosciBlue;
+	JLabel labelWariacijIntensywnosciGray;
 
 	public MainGUI(Main main) {
 		this.main = main;
@@ -30,16 +40,43 @@ public class MainGUI {
 		initialize();
 	}
 
-	public JFrame getframe() {
-		return frame;
+	public JFrame getframe() { return frame; }
+
+	public JLabel getLbl_forImage(){ return lbl_forImage; }
+
+	public JPanel getPanelForHistogram() { return panelForHistogram; }
+	
+	
+	public JLabel getLabelSredniaWartoscIntensywnosciRed() {
+		return labelSredniaWartoscIntensywnosciRed;
 	}
 
-	public JLabel getLbl_forImage() {
-		return lbl_forImage;
+	public JLabel getLabelSredniaWartoscIntensywnosciGreen() {
+		return labelSredniaWartoscIntensywnosciGreen;
 	}
 
-	public JPanel getPanelForHistogram() {
-		return panelForHistogram;
+	public JLabel getLabelSredniaWartoscIntensywnosciBlue() {
+		return labelSredniaWartoscIntensywnosciBlue;
+	}
+
+	public JLabel getLabelSredniaWartoscIntensywnosciGray() {
+		return labelSredniaWartoscIntensywnosciGray;
+	}
+
+	public JLabel getLabelWariacijIntensywnosciRed() {
+		return labelWariacijIntensywnosciRed;
+	}
+
+	public JLabel getLabelWariacijIntensywnosciGreen() {
+		return labelWariacijIntensywnosciGreen;
+	}
+
+	public JLabel getLabelWariacijIntensywnosciBlue() {
+		return labelWariacijIntensywnosciBlue;
+	}
+
+	public JLabel getLabelWariacijIntensywnosciGray() {
+		return labelWariacijIntensywnosciGray;
 	}
 
 	private void initialize() {
@@ -52,10 +89,45 @@ public class MainGUI {
 		panel.setBounds(718, 281, 224, 139);
 		panel.setLayout(null);
 		
-		JLabel labelSredniaWartoscIntensywnosciRed = new JLabel("0");
+		labelSredniaWartoscIntensywnosciRed = new JLabel("0");
 		labelSredniaWartoscIntensywnosciRed.setBounds(83, 11, 49, 23);
 		panel.add(labelSredniaWartoscIntensywnosciRed);
 		labelSredniaWartoscIntensywnosciRed.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		
+		labelSredniaWartoscIntensywnosciGreen = new JLabel("0");
+		labelSredniaWartoscIntensywnosciGreen.setBounds(83, 45, 49, 23);
+		panel.add(labelSredniaWartoscIntensywnosciGreen);
+		labelSredniaWartoscIntensywnosciGreen.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		
+		labelSredniaWartoscIntensywnosciBlue = new JLabel("0");
+		labelSredniaWartoscIntensywnosciBlue.setBounds(83, 78, 49, 23);
+		panel.add(labelSredniaWartoscIntensywnosciBlue);
+		labelSredniaWartoscIntensywnosciBlue.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		
+		labelSredniaWartoscIntensywnosciGray = new JLabel("0");
+		labelSredniaWartoscIntensywnosciGray.setBounds(83, 112, 49, 23);
+		panel.add(labelSredniaWartoscIntensywnosciGray);
+		labelSredniaWartoscIntensywnosciGray.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		
+		labelWariacijIntensywnosciRed = new JLabel("0");
+		labelWariacijIntensywnosciRed.setBounds(179, 11, 60, 23);
+		panel.add(labelWariacijIntensywnosciRed);
+		labelWariacijIntensywnosciRed.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		
+		labelWariacijIntensywnosciGreen = new JLabel("0");
+		labelWariacijIntensywnosciGreen.setBounds(179, 45, 60, 23);
+		panel.add(labelWariacijIntensywnosciGreen);
+		labelWariacijIntensywnosciGreen.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		
+		labelWariacijIntensywnosciBlue = new JLabel("0");
+		labelWariacijIntensywnosciBlue.setBounds(179, 78, 60, 23);
+		panel.add(labelWariacijIntensywnosciBlue);
+		labelWariacijIntensywnosciBlue.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		
+		labelWariacijIntensywnosciGray = new JLabel("0");
+		labelWariacijIntensywnosciGray.setBounds(179, 112, 60, 23);
+		panel.add(labelWariacijIntensywnosciGray);
+		labelWariacijIntensywnosciGray.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		
 		JLabel lblRed = new JLabel("Red");
 		lblRed.setBounds(10, 11, 20, 23);
@@ -67,11 +139,6 @@ public class MainGUI {
 		panel.add(label);
 		label.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		
-		JLabel labelWariacijIntensywnosciRed = new JLabel("0");
-		labelWariacijIntensywnosciRed.setBounds(179, 11, 60, 23);
-		panel.add(labelWariacijIntensywnosciRed);
-		labelWariacijIntensywnosciRed.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		
 		JLabel label_4 = new JLabel("\u03C32 = ");
 		label_4.setBounds(142, 11, 27, 23);
 		panel.add(label_4);
@@ -81,11 +148,6 @@ public class MainGUI {
 		lblGreen.setBounds(10, 45, 31, 23);
 		panel.add(lblGreen);
 		lblGreen.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		
-		JLabel labelSredniaWartoscIntensywnosciGreen = new JLabel("0");
-		labelSredniaWartoscIntensywnosciGreen.setBounds(83, 45, 49, 23);
-		panel.add(labelSredniaWartoscIntensywnosciGreen);
-		labelSredniaWartoscIntensywnosciGreen.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		
 		JLabel lblH_1 = new JLabel("h = ");
 		lblH_1.setBounds(50, 45, 21, 23);
@@ -97,11 +159,6 @@ public class MainGUI {
 		panel.add(label_1);
 		label_1.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		
-		JLabel labelWariacijIntensywnosciGreen = new JLabel("0");
-		labelWariacijIntensywnosciGreen.setBounds(179, 45, 60, 23);
-		panel.add(labelWariacijIntensywnosciGreen);
-		labelWariacijIntensywnosciGreen.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		
 		JLabel lblBlue = new JLabel("Blue");
 		lblBlue.setBounds(10, 78, 23, 23);
 		panel.add(lblBlue);
@@ -111,16 +168,6 @@ public class MainGUI {
 		label_2.setBounds(50, 78, 21, 23);
 		panel.add(label_2);
 		label_2.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		
-		JLabel labelSredniaWartoscIntensywnosciBlue = new JLabel("0");
-		labelSredniaWartoscIntensywnosciBlue.setBounds(83, 78, 49, 23);
-		panel.add(labelSredniaWartoscIntensywnosciBlue);
-		labelSredniaWartoscIntensywnosciBlue.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		
-		JLabel labelWariacijIntensywnosciBlue = new JLabel("0");
-		labelWariacijIntensywnosciBlue.setBounds(179, 78, 60, 23);
-		panel.add(labelWariacijIntensywnosciBlue);
-		labelWariacijIntensywnosciBlue.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		
 		JLabel label_5 = new JLabel("\u03C32 = ");
 		label_5.setBounds(142, 78, 27, 23);
@@ -132,11 +179,6 @@ public class MainGUI {
 		panel.add(lblGray);
 		lblGray.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		
-		JLabel labelSredniaWartoscIntensywnosciGray = new JLabel("0");
-		labelSredniaWartoscIntensywnosciGray.setBounds(83, 112, 49, 23);
-		panel.add(labelSredniaWartoscIntensywnosciGray);
-		labelSredniaWartoscIntensywnosciGray.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		
 		JLabel label_3 = new JLabel("h = ");
 		label_3.setBounds(50, 112, 21, 23);
 		panel.add(label_3);
@@ -146,11 +188,6 @@ public class MainGUI {
 		label_6.setBounds(142, 112, 27, 23);
 		panel.add(label_6);
 		label_6.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-		
-		JLabel labelWariacijIntensywnosciGray = new JLabel("0");
-		labelWariacijIntensywnosciGray.setBounds(179, 112, 60, 23);
-		panel.add(labelWariacijIntensywnosciGray);
-		labelWariacijIntensywnosciGray.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBounds(439, 416, 269, 145);
@@ -222,12 +259,6 @@ public class MainGUI {
 		slider_Gamma.setBounds(56, 61, 134, 23);
 		panel_4.add(slider_Gamma);
 		slider_Gamma.setValue(10);
-		slider_Gamma.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent e) {
-				lblCurrentValueGamma.setText(Double.toString((double)slider_Gamma.getValue()/10));
-				main.changeGamma(slider_Gamma.getValue());
-			}
-		});
 				
 		JButton btn_SplotOpen = new JButton("Splot");
 		panel_5.add(btn_SplotOpen);
@@ -389,74 +420,89 @@ public class MainGUI {
 		btnFurier.setBounds(439, 270, 89, 23);
 		frame.getContentPane().add(btnFurier);
 		
+		JButton btn_Lab = new JButton("Lab");
+		btn_Lab.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				main.startLab();
+			}
+		});
+		btn_Lab.setBounds(538, 270, 89, 23);
+		frame.getContentPane().add(btn_Lab);
+		
 		slider_Exposure.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				lblCurrentValueExposure.setText(Integer.toString(slider_Exposure.getValue()));
-				main.changeExposure(slider_Exposure.getValue());
+				main.getExpConGam().exposure(slider_Exposure.getValue());
 			}
 		});
 		slider_Contrast.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				lblCurrentValueContrast.setText(Integer.toString(slider_Contrast.getValue()));
-				main.changeContrast(slider_Contrast.getValue());
+				main.getExpConGam().contrast(slider_Contrast.getValue());
 			}
 		});
-			
+		slider_Gamma.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				lblCurrentValueGamma.setText(Double.toString((double)slider_Gamma.getValue()/10));
+				main.getExpConGam().gamma(slider_Gamma.getValue());
+			}
+		});
 		
 		sliderHSL_H.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				labelHSL_H.setText(Integer.toString(sliderHSL_H.getValue()));
-				main.changeHSL_H(sliderHSL_H.getValue());
+				main.getHsl().setCurrentHSL_H(sliderHSL_H.getValue());
 			}
 		});
 		sliderHSL_S.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				labelHSL_S.setText(Integer.toString(sliderHSL_S.getValue()));
-				main.changeHSL_S(sliderHSL_S.getValue());
+				main.getHsl().setCurrentHSL_S(sliderHSL_S.getValue());
 			}
 		});
 		sliderHSL_L.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				labelHSL_L.setText(Integer.toString(sliderHSL_L.getValue()));
-				main.changeHSL_L(sliderHSL_L.getValue());
+				main.getHsl().setCurrentHSL_L(sliderHSL_L.getValue());
 			}
 		});
 		
 		sliderCMYK_C.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				labelCurrentCMYK_C.setText(Integer.toString(sliderCMYK_C.getValue()));
-				main.changeCMYK_C(sliderCMYK_C.getValue());
+				main.getCmyk().setCurrentCMYK_C(sliderCMYK_C.getValue());
 			}
 		});
 		sliderCMYK_M.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				labelCurrentCMYK_M.setText(Integer.toString(sliderCMYK_M.getValue()));
-				main.changeCMYK_M(sliderCMYK_M.getValue());
+				main.getCmyk().setCurrentCMYK_M(sliderCMYK_M.getValue());
 			}
 		});
 		sliderCMYK_Y.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				labelCurrentCMYK_Y.setText(Integer.toString(sliderCMYK_Y.getValue()));
-				main.changeCMYK_Y(sliderCMYK_Y.getValue());
+				main.getCmyk().setCurrentCMYK_Y(sliderCMYK_Y.getValue());
 			}
 		});
 		sliderCMYK_K.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
 				labelCurrentCMYK_K.setText(Integer.toString(sliderCMYK_K.getValue()));
-				main.changeCMYK_K(sliderCMYK_K.getValue());
+				main.getCmyk().setCurrentCMYK_K(sliderCMYK_K.getValue());
 			}
 		});
 		
 		btn_Reset_All.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-//				main.Show(lblImage);
+				main.resetAll();
+				resetAll();
 			}
 		});
 		
 		btn_ImageOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(main.openImage() == true){
-//						main.getHistogram().setLabels(labelHistogramR, labelHistogramG, labelHistogramB, labelHistogramGray);
+					main.getSredniaWariacja().calculate(main.getImg());
 //						main.getHistogram().setLabelsSredniaWartoscIntensywnosci(labelSredniaWartoscIntensywnosciRed, 
 //								labelSredniaWartoscIntensywnosciGreen, labelSredniaWartoscIntensywnosciBlue, 
 //								labelSredniaWartoscIntensywnosciGray, labelWariacijIntensywnosciRed, 
@@ -490,4 +536,8 @@ public class MainGUI {
 		});
 	}
 
+	void resetAll() {
+		
+		
+	}
 }

@@ -94,6 +94,8 @@ public class CMYK {
 	        }
 	    }
 	    main.getImageLabel().setIcon(new ImageIcon(imgTemp));
+	    main.getHistogram().drawHistogram(imgTemp);
+	    main.getSredniaWariacja().calculate(imgTemp);
 	}
 	
 	private int clamp(int v, int min, int max){
