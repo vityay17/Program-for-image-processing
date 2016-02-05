@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,8 +19,10 @@ import Algorytms.Histogram;
 import Algorytms.SredniaWariacja;
 import GUI.MainGUI;
 import GUI.SplotGUI;
-import LabGUI.Lab;
-import LabGUI.LabGUI;
+import Lab.Lab;
+import Lab.LabGUI;
+import Luv.Luv;
+import Luv.LuvGUI;
 import Splot.Maximum;
 import Splot.Medianowy;
 import Splot.Minimum;
@@ -39,9 +42,9 @@ public class Main {
 	private SplotGUI splotframe;
 	private MainGUI mainGui;
 	private Lab lab;
-	
-	public Main () {
+	private Luv luv;
 
+	public Main () {
 	}
 	
 	public MainGUI getMainGui() { return mainGui; }
@@ -90,6 +93,12 @@ public class Main {
 	public Medianowy getMedianowy() {
 		return medianowy;
 	}
+	public Lab getLab() {
+		return lab;
+	}
+	public Luv getLuv() {
+		return luv;
+	}
 
 	public boolean openImage(){
 		JFileChooser fileopen = new JFileChooser();
@@ -109,10 +118,6 @@ public class Main {
 				}
 		}
 		return false;		
-	}
-	
-	public void drawHistogram(BufferedImage image){
-//		histogram.setImage(image);
 	}
 
 	public void setSplotFrame(SplotGUI splotframe){
@@ -139,11 +144,12 @@ public class Main {
 	}
 
 	public void startLab() {
-		lab = new Lab();
+		lab = new Lab(this);
+		Main main = this;
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					LabGUI frame = new LabGUI(lab);
+					LabGUI frame = new LabGUI(main);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -151,6 +157,28 @@ public class Main {
 			}
 		});
 		
+	}
+
+	public void startLuv() {
+		luv = new Luv(this);
+		Main main = this;
+		try {
+			LuvGUI dialog = new LuvGUI(main);
+			dialog.setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
+			dialog.setVisible(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					LuvGUI frame = new LuvGUI(main);
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
 	}
 	
 

@@ -246,8 +246,7 @@ public class MainGUI {
 		slider_Exposure.setBounds(56, 7, 134, 23);
 		panel_4.add(slider_Exposure);
 		slider_Exposure.setValue(0);
-		slider_Exposure.setMinimum(-100);
-		
+		slider_Exposure.setMinimum(-100);		
 				
 		JSlider slider_Contrast = new JSlider();
 		slider_Contrast.setBounds(56, 34, 134, 23);
@@ -417,17 +416,16 @@ public class MainGUI {
 		panelForHistogram.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JButton btnFurier = new JButton("Furier");
-		btnFurier.setBounds(439, 270, 89, 23);
+		btnFurier.setBounds(439, 270, 67, 23);
 		frame.getContentPane().add(btnFurier);
 		
 		JButton btn_Lab = new JButton("Lab");
-		btn_Lab.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				main.startLab();
-			}
-		});
-		btn_Lab.setBounds(538, 270, 89, 23);
+		btn_Lab.setBounds(506, 270, 73, 23);
 		frame.getContentPane().add(btn_Lab);
+		
+		JButton btnLuv = new JButton("Luv");
+		btnLuv.setBounds(577, 270, 61, 23);
+		frame.getContentPane().add(btnLuv);
 		
 		slider_Exposure.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
@@ -503,11 +501,6 @@ public class MainGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				if(main.openImage() == true){
 					main.getSredniaWariacja().calculate(main.getImg());
-//						main.getHistogram().setLabelsSredniaWartoscIntensywnosci(labelSredniaWartoscIntensywnosciRed, 
-//								labelSredniaWartoscIntensywnosciGreen, labelSredniaWartoscIntensywnosciBlue, 
-//								labelSredniaWartoscIntensywnosciGray, labelWariacijIntensywnosciRed, 
-//								labelWariacijIntensywnosciGreen, labelWariacijIntensywnosciBlue, labelWariacijIntensywnosciGray);
-//						main.getHistogram().calculateHistogram(main.getImg());
 				}
 			}
 		});
@@ -532,6 +525,18 @@ public class MainGUI {
 				} catch (Exception ex) {
 					ex.printStackTrace();
 				}
+			}
+		});
+		
+		btnLuv.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				main.startLuv();
+			}
+		});
+		
+		btn_Lab.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				main.startLab();
 			}
 		});
 	}
