@@ -16,7 +16,7 @@ import org.jfree.chart.renderer.xy.XYBarRenderer;
 import org.jfree.data.statistics.HistogramDataset;
 import Main.Main;
 
-public class Histogram extends Thread{
+public class Histogram{
 
     private static final int BINS = 256;
     private BufferedImage image;
@@ -27,15 +27,12 @@ public class Histogram extends Thread{
 		this.main = main;
 		image = main.getImg();
 		panelForHistogram = main.getPanelHistogram();
-//		drawHistogram(image);
+		drawHistogram(image);
 	}
-    public void run(){
-//    	drawHistogram(main.getImg());
-    	display();
-    }
+
 	public void drawHistogram(BufferedImage image) {
         this.image = image;
-//        display();
+        display();
     }
 
     private ChartPanel createChartPanel() {
