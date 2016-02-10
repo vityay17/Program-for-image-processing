@@ -17,6 +17,7 @@ import Algorytms.ExpConGam;
 import Algorytms.HSL;
 import Algorytms.Histogram;
 import Algorytms.SredniaWariacja;
+import Compression.Compression;
 import GUI.MainGUI;
 import GUI.SplotGUI;
 import Lab.Lab;
@@ -43,8 +44,10 @@ public class Main {
 	private MainGUI mainGui;
 	private Lab lab;
 	private Luv luv;
+	private Compression compression;
 
 	public Main () {
+
 	}
 	
 	public MainGUI getMainGui() { return mainGui; }
@@ -101,23 +104,33 @@ public class Main {
 	}
 
 	public boolean openImage(){
-		JFileChooser fileopen = new JFileChooser();
-		int ret = fileopen.showDialog(null, "Открыть файл");                
-		if (ret == JFileChooser.APPROVE_OPTION) {
-		    File file = fileopen.getSelectedFile();
-		    try {
-		    	JLabel lbl_forImage = mainGui.getLbl_forImage();
-				img = ImageIO.read(file);
-				lbl_forImage.setIcon(new ImageIcon(img));
-				initAllClasses(img);
-				return true;
-				}
-				catch (IOException e) {
-					JOptionPane.showMessageDialog(null, "Something wrong. Try again.");
-					return false;
-				}
+		JLabel lbl_forImage = mainGui.getLbl_forImage();
+		try {
+			img = ImageIO.read(new File("lena.bmp"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return false;		
+		lbl_forImage.setIcon(new ImageIcon(img));
+		initAllClasses(img);
+		return true;
+//		JFileChooser fileopen = new JFileChooser();
+//		int ret = fileopen.showDialog(null, "Открыть файл");                
+//		if (ret == JFileChooser.APPROVE_OPTION) {
+//		    File file = fileopen.getSelectedFile();
+//		    try {
+//		    	JLabel lbl_forImage = mainGui.getLbl_forImage();
+//				img = ImageIO.read(file);
+//				lbl_forImage.setIcon(new ImageIcon(img));
+//				initAllClasses(img);
+//				return true;
+//				}
+//				catch (IOException e) {
+//					JOptionPane.showMessageDialog(null, "Something wrong. Try again.");
+//					return false;
+//				}
+//		}
+//		return false;		
 	}
 
 	public void setSplotFrame(SplotGUI splotframe){
@@ -137,6 +150,7 @@ public class Main {
 		minimum = new Minimum(img);
 		maximum = new Maximum(img);
 		medianowy = new Medianowy(img);
+		compression = new Compression(this);
 	}
 	
 	public void resetAll() {
@@ -156,7 +170,6 @@ public class Main {
 				}
 			}
 		});
-		
 	}
 
 	public void startLuv() {
@@ -169,17 +182,10 @@ public class Main {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					LuvGUI frame = new LuvGUI(main);
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
 	}
 	
+	void startCompression(){
+		
+	}
 
 }

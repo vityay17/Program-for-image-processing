@@ -130,9 +130,9 @@ public class FurierImpl {
 		int width = img.getWidth();
 		imgFurierImaginalis = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB );
 		
-		 double[][] tempArrR = new double[height][width];
-		 double[][] tempArrG = new double[height][width];
-		 double[][] tempArrB = new double[height][width];
+		double[][] tempArrR = new double[height][width];
+		double[][] tempArrG = new double[height][width];
+		double[][] tempArrB = new double[height][width];
 		for (int row = 0; row < height; row++) {
 			for (int col = 0; col < width; col++) {
 	        	double tempR = (Math.abs(red[row][col*2+1])); 
@@ -149,30 +149,30 @@ public class FurierImpl {
 		double 	maxR = 0.0,
 				maxG = 0.0,
 				maxB = 0.0;
-		 for(int y = 0;y < height; y++){
-	        for(int x = 0;x < width; x++){
-        	if(Double.compare(maxR, tempArrR[y][x])<0)
-        		maxR = tempArrR[y][x];
-        	if(Double.compare(maxG, tempArrG[y][x])<0)
-        		maxG = tempArrG[y][x];
-        	if(Double.compare(maxB, tempArrB[y][x])<0)
-        		maxB = tempArrB[y][x];
-	        }
+		for(int y = 0;y < height; y++){
+			for(int x = 0;x < width; x++){
+				if(Double.compare(maxR, tempArrR[y][x])<0)
+					maxR = tempArrR[y][x];
+				if(Double.compare(maxG, tempArrG[y][x])<0)
+					maxG = tempArrG[y][x];
+				if(Double.compare(maxB, tempArrB[y][x])<0)
+					maxB = tempArrB[y][x];
+			}
 		}
-		 for (int row = 0; row < height; row++) {
-				for (int col = 0; col < width; col++) {
-		        	double tempR =  tempArrR[row][col];
-		        	double tempG = tempArrG[row][col]; 
-		        	double tempB = tempArrB[row][col];
-		        	tempR = tempR*255/maxR;
-			    	tempG = tempG*255/maxG;
-			    	tempB = tempB*255/maxB;
-			    	int r = clamp((int) tempR,0,255);
-			        int g = clamp((int) tempG,0,255);
-			        int b = clamp((int) tempB,0,255);
-			        imgFurierImaginalis.setRGB(col, row, new Color(r,g,b).getRGB());
-		        }
-			}	
+		for (int row = 0; row < height; row++) {
+			for (int col = 0; col < width; col++) {
+				double tempR =  tempArrR[row][col];
+				double tempG = tempArrG[row][col]; 
+				double tempB = tempArrB[row][col];
+				tempR = tempR*255/maxR;
+				tempG = tempG*255/maxG;
+				tempB = tempB*255/maxB;
+				int r = clamp((int) tempR,0,255);
+				int g = clamp((int) tempG,0,255);
+				int b = clamp((int) tempB,0,255);
+				imgFurierImaginalis.setRGB(col, row, new Color(r,g,b).getRGB());
+			}
+		}	
 	}
 	
 	public void calculateSpektrumImage(){
