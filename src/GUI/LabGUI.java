@@ -1,4 +1,4 @@
-package Lab;
+package GUI;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.event.ChangeListener;
 
+import Algorytms.Lab;
 import Main.Main;
 
 import javax.swing.event.ChangeEvent;

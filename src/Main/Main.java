@@ -16,14 +16,15 @@ import Algorytms.CMYK;
 import Algorytms.ExpConGam;
 import Algorytms.HSL;
 import Algorytms.Histogram;
+import Algorytms.Lab;
+import Algorytms.Luv;
 import Algorytms.SredniaWariacja;
 import Compression.Compression;
+import GUI.CommpressionGUI;
+import GUI.LabGUI;
+import GUI.LuvGUI;
 import GUI.MainGUI;
 import GUI.SplotGUI;
-import Lab.Lab;
-import Lab.LabGUI;
-import Luv.Luv;
-import Luv.LuvGUI;
 import Splot.Maximum;
 import Splot.Medianowy;
 import Splot.Minimum;
@@ -45,7 +46,8 @@ public class Main {
 	private Lab lab;
 	private Luv luv;
 	private Compression compression;
-
+	private boolean isImgLoaded = false;
+	
 	public Main () {
 
 	}
@@ -150,7 +152,6 @@ public class Main {
 		minimum = new Minimum(img);
 		maximum = new Maximum(img);
 		medianowy = new Medianowy(img);
-		compression = new Compression(this);
 	}
 	
 	public void resetAll() {
@@ -184,8 +185,26 @@ public class Main {
 		}
 	}
 	
-	void startCompression(){
-		
+	public void startCompression(){
+		Main main = this;
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					CommpressionGUI frame = new CommpressionGUI(main);
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
+	public boolean isImgLoaded() {
+		return isImgLoaded;
+	}
+
+	public void setImgLoaded(boolean isImgLoaded) {
+		this.isImgLoaded = isImgLoaded;
+	}
+	
 }

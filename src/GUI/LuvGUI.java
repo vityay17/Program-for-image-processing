@@ -1,4 +1,4 @@
-package Luv;
+package GUI;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import Algorytms.Luv;
 import Main.Main;
 import javax.swing.JSlider;
 import javax.swing.JLabel;
@@ -32,7 +33,7 @@ public class LuvGUI extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 		
-		JLabel lblLub = new JLabel("LUB");
+		JLabel lblLub = new JLabel("LUV");
 		lblLub.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		lblLub.setBounds(111, 11, 35, 20);
 		contentPanel.add(lblLub);

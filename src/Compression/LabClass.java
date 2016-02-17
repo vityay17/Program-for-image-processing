@@ -4,16 +4,16 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import Algorytms.BasicImageOperations;
+import Main.Main;
 
 public class LabClass {
 	double[][] labL;
 	double[][] labA;
 	double[][] labB;
-	BufferedImage img;
+	Main main;
 	
-	public LabClass(BufferedImage img){
-		this.img = img;
-		rgbToLab();
+	public LabClass(){
+		this.main = main;
 	}
 	
 	public double[][] getLabL() {
@@ -28,7 +28,7 @@ public class LabClass {
 		return labB;
 	}
 
-	void rgbToLab(){
+	public void rgbToLab(BufferedImage img){
 		int height = img.getHeight();
 		int width = img.getWidth();
 		labL = new double[height][width];
@@ -109,4 +109,20 @@ public class LabClass {
 		return new double[]{X, Y, Z};
 	}
 	
+	public BufferedImage labToRGB(double[][] labL, double[][] labA, double[][] labB){
+		int height = labL.length;
+		int width = labL[0].length;
+		BufferedImage imgTemp = new BufferedImage(width, height,BufferedImage.TYPE_INT_RGB );
+		for(int y = 0;y < height; y++){
+	        for(int x = 0;x < width; ++x){
+	        	double[] XYZ = LABtoXYZ(labL[y][x], labA[y][x], labB[y][x]);
+	        	int[] rgb = new BasicImageOperations().XYZtoRGB(XYZ[0], XYZ[1], XYZ[2]);
+	        	int r = new BasicImageOperations().clamp(rgb[0], 0, 255);
+	            int g = new BasicImageOperations().clamp(rgb[1], 0, 255);
+	            int b = new BasicImageOperations().clamp(rgb[2], 0, 255);
+	            imgTemp.setRGB(x, y, new Color(r,g,b).getRGB());
+	        }
+		}
+		return imgTemp;
+	}
 }

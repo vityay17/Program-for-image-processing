@@ -1,18 +1,17 @@
 package Compression;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import org.jtransforms.dct.DoubleDCT_2D;
 
@@ -21,80 +20,65 @@ import Main.Main;
 public class Compression {
 	private BufferedImage img;
 	private Main main;
-	LabClass labClass;
-	int quality;
+	private LabClass labClass;
+	private int quality;
 	
-	int sizeOfChunk = 8;
-    int rowsChunks = 0;
-    int colsChunks = 0;
-    int chunksSize;
+	private int sizeOfChunk = 8;
+	private int rowsChunks = 0;
+	private int colsChunks = 0;
+	private int chunksSize;
 	
-	double[][][] chunksL, chunksA, chunksB;
-	int[][][] chunksIntL, chunksIntA, chunksIntB;
+	private double[][][] chunksL, chunksA, chunksB;
+	private int[][][] chunksIntL, chunksIntA, chunksIntB;
 	
-	int[][] zigzag = makeZigZagArr(8);
+	private int[][] zigzag = makeZigZagArr(sizeOfChunk);
 	
-	int[][] chunksZigL, chunksZigA,chunksZigB;
+	private int[][] chunksZigL, chunksZigA,chunksZigB;
+	
+	private File L = new File("L");
+	private File A = new File("A");
+	private File B = new File("B");
+	private File properties = new File("prop");
+	private File zipName = new File("poc.poc");
 	
 	public Compression(Main main) {
 		this.main = main;
 		img = main.getImg();
-		labClass = new LabClass(img);
-		quality = 31;
+		labClass = new LabClass();
+		labClass.rgbToLab(main.getImg());		
+	}
+	public Compression(Main main, File fileToSave) {
+		System.out.println(fileToSave.getName());
+		System.out.println(fileToSave.getAbsolutePath());
+
+		zipName = fileToSave;
+		this.main = main;
+		img = main.getImg();
+		labClass = new LabClass();
+		labClass.rgbToLab(main.getImg());	
+	}
+	public void calculate(int quality){
+		this.quality = quality;
 		engine();
 	}
-//	public static void main(String[]args) {
-//		Compression com = new Compression(new Main());
-//		double[][] d = {
-//				{0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,24,5,6,7,8,9},
-//				{0,1,2,4,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9},
-//				{0,1,2,5,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9},
-//				{0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9},
-//				{0,1,5,9,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9},
-//				{0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,25,5,6,7,8,9},
-//				{0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9},
-//				{0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9},
-//				{0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,9,0,1,2,3,4,5,6,7,8,29},
-//			};
-////		double [][] temp = com.get8x8block(d,5, 24);
-////		com.print(temp);
-////		int[][] temp2 = com.zigZag(8);
-//		com.print(temp2);
-//	}
-	private void print(double[][] temp) {
-		for(int y = 0;y < temp.length; y++){
-	    	 for(int x = 0;x < temp[y].length; x++){
-	    		 System.out.print(temp[y][x] + ", ");
-	    	 }
-	    	 System.out.println();
-		}
-		System.out.println();
-	}
-	private void print(int[][] temp) {
-		for(int y = 0;y < temp.length; y++){
-	    	 for(int x = 0;x < temp[y].length; x++){
-	    		 System.out.print(temp[y][x] + ", ");
-	    	 }
-	    	 System.out.println();
-		}
-		System.out.println();
-	}
 	void engine(){
-		separateTo8x8blocks();
+		separateToChunks();
 		calculateDCT();
 		quantization();
 		calculateZigZagForChunk();
 		try {
-			compression();
+			compression(properties,  new int[][]{{quality},{img.getHeight()},{img.getWidth()}});
+			compression(L, chunksZigL);
+			compression(A, chunksZigA);
+			compression(B, chunksZigB);
+			packedToZip(new File[]{properties, L, A, B}, zipName);
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-//		BufferedImage imgTemp = new BufferedImage(img.getWidth(), img.getHeight(),BufferedImage.TYPE_INT_RGB );
-	   
 	}
 	
-	synchronized void separateTo8x8blocks(){
+	void separateToChunks(){
 		int height = img.getHeight();
 	    int width = img.getWidth();
     
@@ -107,23 +91,22 @@ public class Compression {
 	    else colsChunks = width/sizeOfChunk;
 	    
 	    chunksSize = rowsChunks * colsChunks;  
-	    
-	    
+	    	    
 	    chunksL = new double[chunksSize][8][8];
 	    chunksA = new double[chunksSize][8][8];
 	    chunksB = new double[chunksSize][8][8];
 	    int count = 0;
 	    for(int y = 0;y < rowsChunks; y++){
 	    	 for(int x = 0;x < colsChunks; x++){
-	    		 chunksL[count] = get8x8block(labClass.getLabL(),y*sizeOfChunk,x*sizeOfChunk);  
-	    		 chunksA[count] = get8x8block(labClass.getLabA(),y*sizeOfChunk,x*sizeOfChunk);
-	    		 chunksB[count] = get8x8block(labClass.getLabB(),y*sizeOfChunk,x*sizeOfChunk);
+	    		 chunksL[count] = getChunk(labClass.getLabL(),y*sizeOfChunk,x*sizeOfChunk);  
+	    		 chunksA[count] = getChunk(labClass.getLabA(),y*sizeOfChunk,x*sizeOfChunk);
+	    		 chunksB[count] = getChunk(labClass.getLabB(),y*sizeOfChunk,x*sizeOfChunk);
 	    		 count++;
 	    	 }
 	    }
 	}
 	
-	double[][] get8x8block(double[][] arr,int y, int x){
+	double[][] getChunk(double[][] arr,int y, int x){
 		double[][] chunk8x8 = new double[8][8]; 
 		for(int i = y,t = 0;i < y+8; i++,t++){
 			for(int j = x,k = 0;j < x+8; j++,k++){
@@ -136,20 +119,13 @@ public class Compression {
 		return chunk8x8;
 	}
 	
-	synchronized void calculateDCT(){
-		double[][] test = new double[8][8];
-		for(int y = 0;y < 8; y++){
-	    	 for(int x = 0;x < 8; x++){
-	    		 test[y][x] = chunksL[1][y][x];
-	    	 }
-		}	
-		
+	void calculateDCT(){	
 		DoubleDCT_2D dct = new DoubleDCT_2D(8, 8);
 		for(int i = 0;i < chunksL.length; i++){    	
 	    		 dct.forward(chunksL[i], true);
-	    		 dct.forward(chunksA[i], false);
-	    		 dct.forward(chunksB[i], false);
-		}
+	    		 dct.forward(chunksA[i], true);
+	    		 dct.forward(chunksB[i], true);
+		}		
 	}
 	
 	void quantization(){
@@ -194,8 +170,8 @@ public class Compression {
 			for(int y = 0;y < sizeOfChunk; y++){
 				for(int x = 0;x < sizeOfChunk; x++){
 					chunksIntL[i][y][x] = (int) (chunksL[i][y][x]/QL[y][x]);  
-					chunksIntA[i][y][x] = (int) (chunksL[i][y][x]/QC[y][x]);
-					chunksIntB[i][y][x] = (int) (chunksL[i][y][x]/QC[y][x]);
+					chunksIntA[i][y][x] = (int) (chunksA[i][y][x]/QC[y][x]);
+					chunksIntB[i][y][x] = (int) (chunksB[i][y][x]/QC[y][x]);
 				}
 			}
 		}
@@ -211,12 +187,10 @@ public class Compression {
 	        result[n - i - 1][n - j - 1] = end--;
 	 
 	        i += d; j -= d;
-	        if (i < 0)
-	        {
+	        if (i < 0){
 	            i++; d = -d; // top reached, reverse
 	        }
-	        else if (j < 0)
-	        {
+	        else if (j < 0){
 	            j++; d = -d; // left reached, reverse
 	        }
 	    } while (start < end);
@@ -225,7 +199,7 @@ public class Compression {
 	    return result;
 	}
 	
-	int[] calculateZigZagForChunk(){
+	void calculateZigZagForChunk(){
 		int size = chunksIntA.length;
 		chunksZigL = new int[size][8*8];
 		chunksZigA = new int[size][8*8];
@@ -234,102 +208,47 @@ public class Compression {
 			for(int i = 0;i < zigzag.length; i++){
 				for(int y = 0;y < zigzag[0].length; y++){
 					chunksZigL[k][zigzag[i][y]] = chunksIntL[k][i][y];
+					chunksZigA[k][zigzag[i][y]] = chunksIntA[k][i][y];
+					chunksZigB[k][zigzag[i][y]] = chunksIntB[k][i][y];
 				}
 			}
 		}
-		
-		return null;
 	}
 	
-	@SuppressWarnings("resource")
-	void compression() throws IOException{
-		
-		BufferedWriter outputWriter = null;
-		outputWriter = new BufferedWriter(new FileWriter("filename.txt"));
-		for(int k = 0;k < chunksZigL.length;k++){
-			for(int i = 0;i < chunksZigL[0].length; i++){
-				// Maybe:
-				outputWriter.write(chunksZigL[k][i]+" ");
-			    // Or:
-//				outputWriter.write(Integer.toString(chunksZigL[i]);
-				
+	void compression(File filename, int[][] arr) throws IOException{		
+		BufferedWriter outputWriter = new BufferedWriter(new FileWriter(filename));		
+		for(int k = 0;k < arr.length;k++){
+			for(int i = 0;i < arr[0].length; i++){
+				outputWriter.write(arr[k][i]+" ");		
 			}
 			outputWriter.newLine();
 		}
 		outputWriter.flush();  
-		outputWriter.close(); 
-		System.out.println("end");
-		try {
-			int[][] arr = create2DIntMatrixFromFile("filename.txt");
-			print(arr);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//		BufferedReader inputReader = null;
-//		inputReader = new BufferedReader(new FileReader("filename.txt"));
-//		for(int k = 0;k < inputReader.;k++){
-//			for(int i = 0;i < chunksZigL[0].length; i++){
-//				// Maybe:
-//				outputWriter.write(chunksZigL[i]+" ");
-//			    // Or:
-////				outputWriter.write(Integer.toString(x[i]);
-//				
-//			}
-//			outputWriter.newLine();
-//		}
+		outputWriter.close(); 		
 	}
 	
-	 public int[][] create2DIntMatrixFromFile(String filename) throws Exception {
-	        int[] matrix = null;
-
-	        // If included in an Eclipse project.
-//	        InputStream stream = ClassLoader.getSystemResourceAsStream("filename.txt");
-//	        System.out.println(stream);
-//	        BufferedReader buffer = new BufferedReader(new FileReader("filename.txt"));
-
-	        // If in the same directory - Probably in your case...
-	        // Just comment out the 2 lines above this and uncomment the line
-	        // that follows.
-	        BufferedReader buffer = new BufferedReader(new FileReader(filename));
-	        ArrayList<int[]> arr = new ArrayList<int[]>();
-	        int size = 0;
-	        Stream<String> str = buffer.lines();
-	        Object[] arr2 = str.toArray();
-	        for(int i = 0; i < arr2.length;i++){
-	        	String[] vals = ((String) arr2[i]).trim().split("\\s+");
-	        	size = vals.length;
-                matrix = new int[size];
-                for (int col = 0; col < size; col++) {
-	                matrix[col] = Integer.parseInt(vals[col]);
-	            }
-	            arr.add(matrix);
-//	        	System.out.println(i+ " " +  Arrays.toString(matrix));
-			}
-	        int [][] finalArr = new int[arr.size()][matrix.length];
-	        for(int i = 0; i < finalArr.length;i++){
-	        	finalArr[i] = arr.get(i);
-	        }
-//	        System.out.println(str.count());
-//	        while ((line = buffer.readLine()) != null) {
-//	            String[] vals = line.trim().split("\\s+");
-//
-//	            // Lazy instantiation.
-//	            if (matrix == null) {
-//	                size = vals.length;
-//	                matrix = new int[size];
-//	                log10 = (int) Math.floor(Math.log10(size * size)) + 1;
-//	                numberFormat = String.format("%%%dd", log10);
-//	            }
-//
-//	            for (int col = 0; col < size; col++) {
-//	            	if(row<64)
-//	                matrix[col] = Integer.parseInt(vals[col]);
-//	            }
-//	            arr.add(matrix);
-////	            row++;
-//	        }
-
-	        return finalArr;
-	    }
+	void packedToZip(File[] files, File zipName2) throws IOException{
+		FileOutputStream fos = new FileOutputStream(zipName2);
+		ZipOutputStream zos = new ZipOutputStream(fos);
+		BufferedOutputStream out = new BufferedOutputStream(zos);
+		for(File arg: files){
+			BufferedReader in = new BufferedReader(new FileReader(arg));
+			zos.putNextEntry(new ZipEntry(arg.getName()));
+			int c;
+			while((c = in.read()) != -1)
+				out.write(c);
+			in.close();
+			out.flush();
+		}
+		out.close();
+		
+//		L.delete();
+//		A.delete();
+//		B.delete();
+//		properties.delete();
+	}
+	
+	 
+	 
+	 
 }

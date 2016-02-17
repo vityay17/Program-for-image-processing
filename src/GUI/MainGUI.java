@@ -1,12 +1,14 @@
 package GUI;
-import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSlider;
@@ -14,8 +16,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import Main.Main;
-
-import java.awt.GridLayout;
 
 public class MainGUI {
 	private Main main;
@@ -81,7 +81,7 @@ public class MainGUI {
 
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 960, 606);
+		frame.setBounds(100, 100, 967, 644);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -255,6 +255,7 @@ public class MainGUI {
 		slider_Contrast.setMinimum(-100);
 		
 		JSlider slider_Gamma = new JSlider();
+		slider_Gamma.setMinimum(1);
 		slider_Gamma.setBounds(56, 61, 134, 23);
 		panel_4.add(slider_Gamma);
 		slider_Gamma.setValue(10);
@@ -427,6 +428,16 @@ public class MainGUI {
 		btnLuv.setBounds(577, 270, 61, 23);
 		frame.getContentPane().add(btnLuv);
 		
+		JButton btnCompression = new JButton("Compression");
+		btnCompression.setBounds(636, 270, 93, 23);
+		frame.getContentPane().add(btnCompression);
+		
+		JButton btnNewButton = new JButton("New button");
+		
+
+		btnNewButton.setBounds(738, 572, 89, 23);
+		frame.getContentPane().add(btnNewButton);
+		
 		slider_Exposure.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
 				lblCurrentValueExposure.setText(Integer.toString(slider_Exposure.getValue()));
@@ -485,64 +496,83 @@ public class MainGUI {
 		});
 		sliderCMYK_K.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent e) {
-				labelCurrentCMYK_K.setText(Integer.toString(sliderCMYK_K.getValue()));
-				main.getCmyk().setCurrentCMYK_K(sliderCMYK_K.getValue());
+				if(main.isImgLoaded()){
+					labelCurrentCMYK_K.setText(Integer.toString(sliderCMYK_K.getValue()));
+					main.getCmyk().setCurrentCMYK_K(sliderCMYK_K.getValue());
+				}
+				else showMessage("You must loaded image first.");
 			}
 		});
-		
-		btn_Reset_All.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				main.resetAll();
-				resetAll();
-			}
-		});
-		
+				
 		btn_ImageOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(main.openImage() == true){
+				if(main.openImage()){
 					main.getSredniaWariacja().calculate(main.getImg());
+					main.setImgLoaded(true);
 				}
 			}
 		});
 		btn_SplotOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				try {
-					splotGui = SplotGUI.getInstance(main);
-					splotGui.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					splotGui.setVisible(true);
-					main.setSplotFrame(splotGui);
-				} catch (Exception e) {
-					e.printStackTrace();
+				if(main.isImgLoaded()){
+					try {
+						splotGui = SplotGUI.getInstance(main);
+						splotGui.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						splotGui.setVisible(true);
+						main.setSplotFrame(splotGui);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
+				else showMessage("You must loaded image first.");
+				
 			}
 		});
 		btnFurier.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					FurierGUI FurierImplementationGUIInstance = FurierGUI.getInstance(main);
-					FurierImplementationGUIInstance.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-					FurierImplementationGUIInstance.setVisible(true);
-				} catch (Exception ex) {
-					ex.printStackTrace();
+				if(main.isImgLoaded()){
+					try {
+						FurierGUI FurierImplementationGUIInstance = FurierGUI.getInstance(main);
+						FurierImplementationGUIInstance.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+						FurierImplementationGUIInstance.setVisible(true);
+					} catch (Exception ex) {
+						ex.printStackTrace();
+					}
 				}
+				else showMessage("You must loaded image first.");
 			}
 		});
 		
 		btnLuv.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				main.startLuv();
+				if(main.isImgLoaded()){
+					main.startLuv();
+				}
+				else showMessage("You must loaded image first.");
 			}
 		});
 		
 		btn_Lab.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				main.startLab();
+				if(main.isImgLoaded())
+					main.startLab();
+				else showMessage("You must loaded image first.");
+			}
+		});
+		
+		btnCompression.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				main.startCompression();
+			}
+		});		
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {			   			    				       
+
 			}
 		});
 	}
-
-	void resetAll() {
-		
-		
-	}
+	
+	public void showMessage(String s ) {
+				JOptionPane.showMessageDialog(null, s);
+			}
 }

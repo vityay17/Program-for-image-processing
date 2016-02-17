@@ -1,11 +1,10 @@
-package Luv;
+package Algorytms;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
 
-import Algorytms.BasicImageOperations;
 import Main.Main;
 
 public class Luv {
@@ -19,15 +18,15 @@ public class Luv {
 		this.main = main;
 		img = main.getImg();
 	}
-	void setL(int L){
+	public void setL(int L){
 		currentL = L;
 		engine();
 	}
-	void setA(int A){
+	public void setA(int A){
 		currentL = A;
 		engine();
 	}
-	void setB(int B){
+	public void setB(int B){
 		currentL = B;
 		engine();
 	}
